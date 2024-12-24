@@ -1,6 +1,8 @@
 # magic_api
 An API for adding magic powers in Minetest
 
+Code licensed under GNU GPLv3, images licensed under CC0.
+
 ### A minimal example:
 ```lua
 magic_api.register_power("mymod:magic_power", {
