@@ -121,8 +121,7 @@ controls.register_on_press(function(player, key)
                 hud_elem_type = "image",
                 position = {x = 0.5, y = 0.5},
                 offset = {x = 0, y = 0},
-                text = powers[power_list[selected_powers[name]]].image,
-                scale = {x = 0.125, y = 0.125}
+                text = powers[power_list[selected_powers[name]]].image
             })
             hud_elements[name][2] = powerid
         end
