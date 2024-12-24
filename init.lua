@@ -1,4 +1,4 @@
-vlm_activation = {}
+magic_api = {}
 
 local function get_power_list(player_powers)
     local list = {}
@@ -9,7 +9,7 @@ local function get_power_list(player_powers)
 end
 
 local powers = {}
-function vlm_activation.register_power(name, def)
+function magic_api.register_power(name, def)
     --[[
         def: {
             image = ...,
@@ -22,22 +22,22 @@ function vlm_activation.register_power(name, def)
     def.on_deactivate = def.on_deactivate or function(player) end
     powers[name] = def
 end
-function vlm_activation.give_player_power(player, name)
+function magic_api.give_player_power(player, name)
     local meta = player:get_meta()
-    local player_powers = minetest.deserialize(meta:get_string("vlm_activation:powers")) or {}
+    local player_powers = minetest.deserialize(meta:get_string("magic_api:powers")) or {}
     player_powers[name] = true
-    meta:set_string("vlm_activation:powers", minetest.serialize(player_powers))
+    meta:set_string("magic_api:powers", minetest.serialize(player_powers))
 end
-function vlm_activation.revoke_player_power(player, name)
+function magic_api.revoke_player_power(player, name)
     local meta = player:get_meta()
-    local player_powers = minetest.deserialize(meta:get_string("vlm_activation:powers")) or {}
+    local player_powers = minetest.deserialize(meta:get_string("magic_api:powers")) or {}
     player_powers[name] = false
     meta:set_string("vlm-activation:powers", minetest.serialize(player_powers))
 end
 local active_powers = {}
-function vlm_activation.activate_player_power(player, name)
+function magic_api.activate_player_power(player, name)
     local meta = player:get_meta()
-    local player_powers = minetest.deserialize(meta:get_string("vlm_activation:powers")) or {}
+    local player_powers = minetest.deserialize(meta:get_string("magic_api:powers")) or {}
     if player_powers[name] then
         active_powers[player:get_player_name()] = name
         powers[name].on_activate(player)
@@ -45,9 +45,9 @@ function vlm_activation.activate_player_power(player, name)
     end
     return false
 end
-function vlm_activation.deactivate_player_power(player, name)
+function magic_api.deactivate_player_power(player, name)
     local meta = player:get_meta()
-    local player_powers = minetest.deserialize(meta:get_string("vlm_activation:powers")) or {}
+    local player_powers = minetest.deserialize(meta:get_string("magic_api:powers")) or {}
     if player_powers[name] then
         active_powers[player:get_player_name()] = nil
         powers[name].on_deactivate(player)
@@ -55,10 +55,10 @@ function vlm_activation.deactivate_player_power(player, name)
     end
     return false
 end
-function vlm_activation.force_activate(player, name)
+function magic_api.force_activate(player, name)
     powers[name].on_activate(player)
 end
-function vlm_activation.force_deactivate(player, name)
+function magic_api.force_deactivate(player, name)
     powers[name].on_deactivate(player)
 end    
 
@@ -79,14 +79,14 @@ controls.register_on_press(function(player, key)
     local name = player:get_player_name()
     if active_players[name] then
         local meta = player:get_meta()
-        local power_list = get_power_list(minetest.deserialize(meta:get_string("vlm_activation:powers")) or {})
+        local power_list = get_power_list(minetest.deserialize(meta:get_string("magic_api:powers")) or {})
         if key == "aux1" then
             active_players[name] = false
             
             local same_power = power_list[selected_powers[name]] == active_powers[name]
-            vlm_activation.deactivate_player_power(player, active_powers[name]) -- Deactivate current power
+            magic_api.deactivate_player_power(player, active_powers[name]) -- Deactivate current power
             if not same_power then
-                vlm_activation.activate_player_power(player, power_list[selected_powers[name]])
+                magic_api.activate_player_power(player, power_list[selected_powers[name]])
             end
             clear_magic_effect(player)
         elseif key == "up" or key == "down" then
@@ -114,7 +114,7 @@ controls.register_on_press(function(player, key)
         hud_elements[name][1] = bgid
 
         local meta = player:get_meta()
-        local power_list = get_power_list(minetest.deserialize(meta:get_string("vlm_activation:powers")) or {})
+        local power_list = get_power_list(minetest.deserialize(meta:get_string("magic_api:powers")) or {})
         if #power_list > 0 then
             selected_powers[name] = selected_powers[name] or 1
             local powerid = player:hud_add({
@@ -153,7 +153,7 @@ minetest.register_on_joinplayer(function(player)
     hud_elements[player:get_player_name()] = {}
     if mcl_gamemode.get_gamemode(player) == "creative" then
         for name, _ in pairs(powers) do
-            vlm_activation.give_player_power(player, name)
+            magic_api.give_player_power(player, name)
         end
     end
 end)
