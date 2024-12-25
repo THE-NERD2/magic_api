@@ -108,7 +108,7 @@ controls.register_on_press(function(player, key)
             hud_elem_type = "image",
             position = {x = 0, y = 0},
             offset = {x = 0, y = 0},
-            text = "bg.png",
+            text = "magic_api_hud_bg.png",
             scale = {x = -200, y = -200}
         })
         hud_elements[name][1] = bgid
@@ -139,7 +139,7 @@ controls.register_on_press(function(player, key)
             maxexptime = 3,
             minsize = 1,
             maxsize = 2,
-            texture = "particle.png",
+            texture = "magic_api_particle.png",
             collisiondetection = false,
             attached = player,
             playername = player:get_player_name()
