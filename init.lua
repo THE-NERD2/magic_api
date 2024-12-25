@@ -32,7 +32,7 @@ function magic_api.revoke_player_power(player, name)
     local meta = player:get_meta()
     local player_powers = minetest.deserialize(meta:get_string("magic_api:powers")) or {}
     player_powers[name] = false
-    meta:set_string("vlm-activation:powers", minetest.serialize(player_powers))
+    meta:set_string("magic_api:powers", minetest.serialize(player_powers))
 end
 local active_powers = {}
 function magic_api.activate_player_power(player, name)
