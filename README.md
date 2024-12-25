@@ -21,4 +21,4 @@ magic_api.register_power("mymod:magic_power", {
 
 ## License information
 - **Code**: Licensed under [GNU GPLv3](LICENSE)
-- **Art**: Licensed under [CC0 1.0 Universal License](ART_LICENSE)
+- **Art**: Licensed under [CC0 1.0 Universal License](LICENSE_CC0)
